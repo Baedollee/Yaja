@@ -1,22 +1,15 @@
-import React from "react";
-import TodoCard from "./TodoCard";
+import React from 'react';
+import TodoCard from './TodoCard';
 
-const TodoList = ({ isWorking, todoList, setTodoList }) => {
+const TodoList = ({ isWorking, todoList }) => {
   return (
     <div>
-      <p>{isWorking ? "Working..." : "Done..."}</p>
+      <p>{isWorking ? 'Working...' : 'Done...'}</p>
       {isWorking && (
         <div>
           {todoList.map((todo) => {
             if (!todo.isDone) {
-              return (
-                <TodoCard
-                  key={todo.id}
-                  todo={todo}
-                  todoList={todoList}
-                  setTodoList={setTodoList}
-                />
-              );
+              return <TodoCard key={todo.id} todo={todo} todoList={todoList} />;
             } else {
               return null;
             }
@@ -27,14 +20,7 @@ const TodoList = ({ isWorking, todoList, setTodoList }) => {
         <div>
           {todoList.map((todo) => {
             if (todo.isDone) {
-              return (
-                <TodoCard
-                  key={todo.id}
-                  todo={todo}
-                  todoList={todoList}
-                  setTodoList={setTodoList}
-                />
-              );
+              return <TodoCard key={todo.id} todo={todo} todoList={todoList} />;
             } else {
               return null;
             }

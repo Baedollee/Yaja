@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Button from "./Button";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import Button from './Button';
+import { __addTodo } from './redux/modules/todo';
 
 const TodoForm = ({ todoList, setTodoList }) => {
-  let num = 2;
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  let num = 0;
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const dispatch = useDispatch();
 
   const onAddTodo = () => {
     const todo = {
@@ -14,7 +18,8 @@ const TodoForm = ({ todoList, setTodoList }) => {
       content: content,
       isDone: false,
     };
-    setTodoList([...todoList, todo]);
+    dispatch(__addTodo(todo));
+
     num++;
   };
 

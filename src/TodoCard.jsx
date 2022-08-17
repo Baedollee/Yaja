@@ -1,25 +1,26 @@
-import styled from "styled-components";
-import Button from "./Button";
+import styled from 'styled-components';
+import Button from './Button';
+import { useDispatch } from 'react-redux';
+import { __deleteTodoList, __editTodoList } from './redux/modules/todo';
 
-export default function TodoCard({ todoList, setTodoList, todo }) {
+export default function TodoCard({ todoList, todo }) {
+  const dispatch = useDispatch();
+
   const onDeleteTodo = (id) => {
-    if (window.confirm("삭제 하시겠습니까")) {
-      let copy = todoList.filter((todo) => todo.id !== id);
-      setTodoList(copy);
+    if (window.confirm('삭제 하시겠습니까')) {
+      dispatch(__deleteTodoList(id));
     }
   };
 
-  const onUpdateTodo = (id) => {
-    let copy = todoList.map((todo) => {
-      if (todo.id === id) {
-        todo.isDone = !todo.isDone;
-        return todo;
-      } else {
-        return todo;
-      }
-    });
+  const onUpdateTodo = (todo) => {
+    let copy = {
+      id: todo.id,
+      title: todo.title,
+      content: todo.content,
+      isDone: !todo.isDone,
+    };
 
-    setTodoList(copy);
+    dispatch(__editTodoList(copy));
   };
 
   return (
@@ -30,16 +31,14 @@ export default function TodoCard({ todoList, setTodoList, todo }) {
         border="red"
         onClick={() => {
           onDeleteTodo(todo.id);
-        }}
-      >
+        }}>
         삭제하기
       </Button>
       <Button
         background={todo.isDone}
         onClick={() => {
-          onUpdateTodo(todo.id);
-        }}
-      >
+          onUpdateTodo(todo);
+        }}>
         완료
       </Button>
     </TodoContainer>
